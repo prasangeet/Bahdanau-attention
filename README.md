@@ -33,24 +33,29 @@ Both models follow an encoder-decoder architecture with attention:
 For a bidirectional GRU encoder, we process the input sequence in both forward and backward directions.
 
 **Reset Gate:**
+
 $$r_t = \sigma(W_r x_t + U_r h_{t-1})$$
 
 **Update Gate:**
+
 $$z_t = \sigma(W_z x_t + U_z h_{t-1})$$
 
 **Candidate Hidden State:**
+
 $$\tilde{h}_t = \tanh(W_h x_t + U_h (r_t \odot h_{t-1}))$$
 
 **Hidden State Update:**
+
 $$h_t = (1 - z_t) \odot h_{t-1} + z_t \odot \tilde{h}_t$$
 
 **Bidirectional Representation:**
 
-Forward direction: $\overrightarrow{h}_t$ (process $x_1, x_2, ..., x_T$ left-to-right)
+Forward direction: $`\overrightarrow{h}_t`$ (process $x_1, x_2, ..., x_T$ left-to-right)
 
-Backward direction: $\overleftarrow{h}_t$ (process $x_T, x_{T-1}, ..., x_1$ right-to-left)
+Backward direction: $`\overleftarrow{h}_t`$ (process $x_T, x_{T-1}, ..., x_1$ right-to-left)
 
 **Concatenated Output:**
+
 $$h_t^{bi} = [\overrightarrow{h}_t; \overleftarrow{h}_t] \in \mathbb{R}^{2 \times H}$$
 
 where $\odot$ denotes element-wise multiplication, $\sigma$ is the sigmoid activation, and $W, U$ are learned weight matrices.
